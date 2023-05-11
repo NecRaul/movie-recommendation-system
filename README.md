@@ -16,4 +16,4 @@ pip install -r requirements.txt
 
 It asks for the movie name, you enter the movie name, it gives you 10 similar movies.
 
-For in-depth explanation, you can check the comment in `main.py`.
+For in-depth explanation, you can check the comments in `main.py`.
