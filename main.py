@@ -68,8 +68,8 @@ def get_recommendations(movie_title, recommendation_count, cosine_sim=cosine_sim
     idx = indices[movie_title]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    # [1: 11] is because obviously the most similar movie is the movie name we provided itself
-    sim_scores = sim_scores[1: recommendation_count + 1]
+    # [1:recommendation_count + 1] is because obviously the most similar movie is the movie name we provided itself
+    sim_scores = sim_scores[1:recommendation_count+1]
     movie_indices = [i[0] for i in sim_scores]
     return cleaned['original_title'].iloc[movie_indices]
 
