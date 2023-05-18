@@ -14,6 +14,6 @@ pip install -r requirements.txt
 
 ## How it works
 
-It asks for the movie name, you enter the movie name, it gives you 10 similar movies.
+It asks for the movie name and how many movies you'd like to be shown and then gives similar movies based on your inputs.
 
 For in-depth explanation, you can check the comments in `main.py`.
