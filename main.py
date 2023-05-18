@@ -4,6 +4,8 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer as tf
 from sklearn.metrics.pairwise import linear_kernel as lk
 
+loop = True
+
 # getting current working directory
 path_index = __file__.rfind("\\")
 cwd = __file__[:path_index + 1]
@@ -65,7 +67,10 @@ indices = pd.Series(
 
 
 def get_recommendations(movie_title, recommendation_count, cosine_sim=cosine_sim):
-    idx = indices[movie_title]
+    if (movie_title in indices.index):
+        idx = indices[movie_title]
+    else:
+        return "Such a movie doesn't exist in the dataset."
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     # [1:recommendation_count + 1] is because obviously the most similar movie is the movie name we provided itself
@@ -74,8 +79,11 @@ def get_recommendations(movie_title, recommendation_count, cosine_sim=cosine_sim
     return cleaned['original_title'].iloc[movie_indices]
 
 
-movie_title = input("Enter movie name: ")
-recommendation_count = int(input("How many recommendations? "))
-
-# getting the recommendation
-print(get_recommendations(movie_title, recommendation_count))
+while (loop):
+    movie_title = input("Enter movie name: ")
+    recommendation_count = int(input("How many recommendations? "))
+    # getting the recommendation
+    print(get_recommendations(movie_title, recommendation_count))
+    loopBreakInput = (input("Do you want to continue? Y/n "))
+    if (loopBreakInput.lower() == "n"):
+        loop = False
