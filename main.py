@@ -4,8 +4,6 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer as tf
 from sklearn.metrics.pairwise import linear_kernel as lk
 
-loop = True
-
 # getting current working directory
 path_index = __file__.rfind('\\')
 cwd = __file__[:path_index + 1]
