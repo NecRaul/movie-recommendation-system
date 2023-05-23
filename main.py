@@ -7,12 +7,12 @@ from sklearn.metrics.pairwise import linear_kernel as lk
 loop = True
 
 # getting current working directory
-path_index = __file__.rfind("\\")
+path_index = __file__.rfind('\\')
 cwd = __file__[:path_index + 1]
 
 # reading data
-credits = pd.read_csv(cwd + "tmdb_5000_credits.csv")
-movies = pd.read_csv(cwd + "tmdb_5000_movies.csv")
+credits = pd.read_csv(cwd + 'tmdb_5000_credits.csv')
+movies = pd.read_csv(cwd + 'tmdb_5000_movies.csv')
 
 # printing data and its shape
 # print(credits.head())
@@ -21,23 +21,23 @@ movies = pd.read_csv(cwd + "tmdb_5000_movies.csv")
 # print(movies.shape)
 
 # preparing data for union
-credits_renamed = credits.rename(index=str, columns={"movie_id": "id"})
+credits_renamed = credits.rename(index=str, columns={'movie_id': 'id'})
 # print(credits_renamed.head())
 
 # union
-merge = movies.merge(credits_renamed, on="id")
+merge = movies.merge(credits_renamed, on='id')
 # print(merge.head())
 
 # dropping unnecessary columns
 cleaned = merge.drop(
-    columns=["homepage", "title_x", "title_y", "status", "production_countries"])
+    columns=['homepage', 'title_x', 'title_y', 'status', 'production_countries'])
 # print(cleaned.head())
 
 # TF-IDF vectorizor to remove articles from sentences
 tfidf = tf(stop_words='english', ngram_range=(1, 3), min_df=3, analyzer='word')
 
 # replacing NaN with a blank string
-cleaned["overview"] = cleaned["overview"].fillna("")
+cleaned['overview'] = cleaned['overview'].fillna('')
 
 # TF-IDF matrix construction
 tfidf_matrix = tfidf.fit_transform(cleaned['overview'])
@@ -70,7 +70,7 @@ def get_recommendations(movie_title, recommendation_count, cosine_sim=cosine_sim
     if (movie_title in indices.index):
         idx = indices[movie_title]
     else:
-        return "Such a movie doesn't exist in the dataset."
+        return 'Such a movie doesn\'t exist in the dataset.'
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     # [1:recommendation_count + 1] is because obviously the most similar movie is the movie name we provided itself
@@ -79,11 +79,11 @@ def get_recommendations(movie_title, recommendation_count, cosine_sim=cosine_sim
     return cleaned['original_title'].iloc[movie_indices]
 
 
-while (loop):
-    movie_title = input("Enter movie name: ")
-    recommendation_count = int(input("How many recommendations? "))
+while (True):
+    movie_title = input('Enter movie name: ')
+    recommendation_count = int(input('How many recommendations? '))
     # getting the recommendation
     print(get_recommendations(movie_title, recommendation_count))
-    loopBreakInput = (input("Do you want to continue? Y/n "))
-    if (loopBreakInput.lower() == "n"):
-        loop = False
+    loopBreakInput = (input('Do you want to continue? Y/n '))
+    if (loopBreakInput.lower() == 'n'):
+        break
