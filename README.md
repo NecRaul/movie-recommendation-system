@@ -4,7 +4,7 @@ Movie Recommendation System for a school project. Data taken from Kaggle.
 
 ## Requirements
 
-Everything depends on pandas and even more so sklearn (scikit-learn).
+Everything depends on `pandas` and even more so on `sklearn` (`scikit-learn`).
 
 You can install these packages by running
 
